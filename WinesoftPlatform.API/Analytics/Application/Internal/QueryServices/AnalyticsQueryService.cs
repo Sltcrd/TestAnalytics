@@ -6,9 +6,6 @@ using WinesoftPlatform.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 
 namespace WinesoftPlatform.API.Analytics.Application.Internal.QueryServices;
 
-/**
- * Implementation of the Analytics query service.
- */
 public class AnalyticsQueryService : IAnalyticsQueryService
 {
     private readonly AppDbContext _context;
@@ -18,17 +15,18 @@ public class AnalyticsQueryService : IAnalyticsQueryService
         _context = context;
     }
 
-    public async Task<IEnumerable<RecentOrderResource>> HandleGetRecentOrders()
+    public async Task<IEnumerable<PurchaseOrderResource>> Handle(GetPurchaseOrdersLast7DaysQuery query)
     {
-        // Read from _context.Orders
+        var sevenDaysAgo = DateTime.UtcNow.AddDays(-7);
+        
         return await _context.Orders
             .AsNoTracking()
+            .Where(o => o.CreatedDate >= sevenDaysAgo)
             .OrderByDescending(o => o.CreatedDate)
-            .Take(5)
-            .Select(o => new RecentOrderResource(
+            .Select(o => new PurchaseOrderResource(
                 o.Id,
                 o.Status,
-                o.CreatedDate.Value.DateTime, // Convert DateTimeOffset? to DateTime
+                o.CreatedDate.Value.DateTime,
                 o.ProductId,
                 o.Quantity
             ))
@@ -42,19 +40,13 @@ public class AnalyticsQueryService : IAnalyticsQueryService
             .GroupBy(s => s.SupplyName)
             .Select(g => new SupplyLevelResource(
                 g.Key,
-                g.Sum(s => s.Quantity) // Add up all the quantities of that product
+                g.Sum(s => s.Quantity)
             ))
             .ToListAsync();
     }
 
     public async Task<IEnumerable<LowStockAlertResource>> HandleGetLowStockAlerts()
     {
-        // return await _context.Supplies
-        //     .AsNoTracking()
-        //     .Where(s => s.Quantity <= s.MinStock) 
-        //     .Select(s => new LowStockAlertResource(s.SupplyName, s.Quantity, s.MinStock))
-        //     .ToListAsync();
-
         return await Task.FromResult(new List<LowStockAlertResource>().AsEnumerable());
     }
 
@@ -66,10 +58,10 @@ public class AnalyticsQueryService : IAnalyticsQueryService
         return await _context.Supplies
             .AsNoTracking()
             .Where(s => s.Date >= startDate && s.Date <= endDate)
-            .GroupBy(s => s.Date.Date) // Group by day
+            .GroupBy(s => s.Date.Date)
             .Select(g => new SupplyRotationResource(
                 g.Key,
-                g.Count()   // The number of movements entries
+                g.Count()
             ))
             .OrderBy(r => r.Day)
             .ToListAsync();
@@ -80,16 +72,15 @@ public class AnalyticsQueryService : IAnalyticsQueryService
         var endDate = query.EndDate ?? DateTime.UtcNow;
         var startDate = query.StartDate ?? endDate.AddDays(-30);
 
-        // This query combines Orders and Supplies to calculate (Quantity * Price)
         var totalCost = await _context.Orders
             .AsNoTracking()
             .Where(o => o.CreatedDate >= startDate && o.CreatedDate <= endDate)
-            .Join(_context.Supplies, //The JOIN with the Supplies table
+            .Join(_context.Supplies,
                 order => order.ProductId,
                 supply => supply.Id,
                 (order, supply) => new { order.Quantity, supply.Price }
             )
-            .SumAsync(x => (double)x.Quantity * (double)x.Price); //Total (Quantity * Price)
+            .SumAsync(x => (double)x.Quantity * (double)x.Price);
 
         return new CostsSummaryResource(totalCost, startDate, endDate);
     }
