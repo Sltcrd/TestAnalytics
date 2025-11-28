@@ -47,7 +47,20 @@ public class AnalyticsQueryService : IAnalyticsQueryService
 
     public async Task<IEnumerable<LowStockAlertResource>> HandleGetLowStockAlerts()
     {
-        return await Task.FromResult(new List<LowStockAlertResource>().AsEnumerable());
+        {
+            // Definimos un umbral fijo para pruebas ej: 10 unidades
+            int defaultThreshold = 10;
+
+            return await _context.Supplies
+                .AsNoTracking()
+                .Where(s => s.Quantity < defaultThreshold) // Filtra productos con menos de 10 unidades
+                .Select(s => new LowStockAlertResource(
+                    s.SupplyName, 
+                    s.Quantity, 
+                    defaultThreshold
+                ))
+                .ToListAsync();
+        }
     }
 
     public async Task<IEnumerable<SupplyRotationResource>> HandleGetSupplyRotation(GetAnalyticsMetricsQuery query)
@@ -55,16 +68,22 @@ public class AnalyticsQueryService : IAnalyticsQueryService
         var endDate = query.EndDate ?? DateTime.UtcNow;
         var startDate = query.StartDate ?? endDate.AddDays(-7);
 
-        return await _context.Supplies
+        var rawSupplies = await _context.Supplies
             .AsNoTracking()
             .Where(s => s.Date >= startDate && s.Date <= endDate)
+            .ToListAsync();
+        
+        // PASO 2: Agrupar y proyectar en Memoria (C#)
+        var result = rawSupplies
             .GroupBy(s => s.Date.Date)
             .Select(g => new SupplyRotationResource(
                 g.Key,
                 g.Count()
             ))
             .OrderBy(r => r.Day)
-            .ToListAsync();
+            .ToList();
+
+        return result;
     }
 
     public async Task<CostsSummaryResource> HandleGetCostsSummary(GetAnalyticsMetricsQuery query)
