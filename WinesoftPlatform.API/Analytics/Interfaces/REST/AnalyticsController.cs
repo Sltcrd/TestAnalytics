@@ -14,10 +14,13 @@ namespace WinesoftPlatform.API.Analytics.Interfaces.REST;
 public class AnalyticsController : ControllerBase
 {
     private readonly IAnalyticsQueryService _analyticsQueryService;
+    private readonly IAnalyticsCommandService _analyticsCommandService;
 
-    public AnalyticsController(IAnalyticsQueryService analyticsQueryService)
+    public AnalyticsController(IAnalyticsQueryService analyticsQueryService,
+        IAnalyticsCommandService analyticsCommandService)
     {
         _analyticsQueryService = analyticsQueryService;
+        _analyticsCommandService = analyticsCommandService;
     }
 
     [HttpGet("purchase-orders/last-7-days")]
@@ -80,7 +83,7 @@ public class AnalyticsController : ControllerBase
         var data = await _analyticsQueryService.HandleGetCostsSummary(query);
         return Ok(data);
     }
-    
+
     [HttpPost("reports")]
     [SwaggerOperation(
         Summary = "Generate analytics report",
@@ -91,15 +94,16 @@ public class AnalyticsController : ControllerBase
     public async Task<IActionResult> GenerateReport([FromBody] GenerateReportResource resource)
     {
         var command = GenerateAnalyticsReportCommandFromResourceAssembler.ToCommandFromResource(resource);
-    
+
         try
         {
             var pdfBytes = await _analyticsCommandService.Handle(command);
-        
+
             return File(pdfBytes, "application/pdf", $"analytics-report-{DateTime.UtcNow:yyyyMMdd}.pdf");
         }
         catch (ArgumentException ex)
         {
             return BadRequest(new { message = ex.Message });
         }
+    }
 }

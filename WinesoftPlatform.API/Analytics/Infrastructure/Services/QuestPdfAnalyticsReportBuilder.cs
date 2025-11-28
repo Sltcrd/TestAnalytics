@@ -17,6 +17,7 @@ public class QuestPdfAnalyticsReportBuilder : IAnalyticsReportBuilder
 
     public QuestPdfAnalyticsReportBuilder(AppDbContext context)
     {
+        QuestPDF.Settings.License = LicenseType.Community;
         _context = context;
     }
 
