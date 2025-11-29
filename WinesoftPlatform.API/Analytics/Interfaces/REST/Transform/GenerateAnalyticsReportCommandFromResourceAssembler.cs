@@ -13,7 +13,8 @@ public static class GenerateAnalyticsReportCommandFromResourceAssembler
         return new GenerateAnalyticsReportCommand(
             resource.StartDate,
             resource.EndDate,
-            resource.Widgets
+            resource.Widgets,
+            resource.Language
         );
     }
 }

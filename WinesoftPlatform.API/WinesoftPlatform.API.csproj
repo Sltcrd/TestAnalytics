@@ -24,4 +24,21 @@
         <PackageReference Include="QuestPDF" Version="2024.12.3"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <EmbeddedResource Update="Resources\ReportMessages*.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>%(Filename).Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\ReportMessages.en.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+          <LastGenOutput>ReportMessages.en.Designer.cs</LastGenOutput>
+          <DependentUpon>ReportMessages.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\ReportMessages.es.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+          <LastGenOutput>ReportMessages.es.Designer.cs</LastGenOutput>
+          <DependentUpon>ReportMessages.cs</DependentUpon>
+        </EmbeddedResource>
+    </ItemGroup>
+
 </Project>

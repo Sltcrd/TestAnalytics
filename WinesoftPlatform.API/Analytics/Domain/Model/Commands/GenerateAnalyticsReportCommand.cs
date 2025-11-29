@@ -9,5 +9,6 @@ namespace WinesoftPlatform.API.Analytics.Domain.Model.Commands;
 public record GenerateAnalyticsReportCommand(
     DateTime StartDate,
     DateTime EndDate,
-    IEnumerable<string> Widgets
+    IEnumerable<string> Widgets,
+    string Language
 );

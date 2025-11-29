@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            <xsd:complexType>
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element name="data">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="resheader">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" />
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
+            </xsd:complexType>
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+    <resheader name="version"><value>2.0</value></resheader>
+    <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+    <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+    <data name="PlatformName" xml:space="preserve"><value>Plataforma WineSoft</value></data>
+    <data name="ReportTitle" xml:space="preserve"><value>Reporte de Analítica</value></data>
+    <data name="GeneratedOn" xml:space="preserve"><value>Generado el</value></data>
+    <data name="Page" xml:space="preserve"><value>Pág.</value></data>
+    <data name="Of" xml:space="preserve"><value>de</value></data>
+    <data name="ReportPeriod" xml:space="preserve"><value>Periodo del Reporte</value></data>
+    <data name="To" xml:space="preserve"><value>al</value></data>
+    <data name="Duration" xml:space="preserve"><value>Duración</value></data>
+    <data name="Days" xml:space="preserve"><value>días</value></data>
+    <data name="TotalCost" xml:space="preserve"><value>Costo Total de Compras</value></data>
+    <data name="TotalDesc" xml:space="preserve"><value>Gastos totales del periodo</value></data>
+    <data name="ReportRange" xml:space="preserve"><value>Rango del Reporte</value></data>
+    <data name="Captured" xml:space="preserve"><value>capturados</value></data>
+
+    <data name="Widget_PurchaseOrders" xml:space="preserve"><value>Órdenes de Compra Recientes</value></data>
+    <data name="Widget_SupplyLevels" xml:space="preserve"><value>Niveles de Inventario Actuales</value></data>
+    <data name="Widget_LowStockAlerts" xml:space="preserve"><value>Alertas de Stock Bajo</value></data>
+    <data name="Widget_SupplyRotation" xml:space="preserve"><value>Actividad de Rotación</value></data>
+    <data name="Widget_CostsSummary" xml:space="preserve"><value>Resumen de Costos</value></data>
+
+    <data name="Col_ID" xml:space="preserve"><value>ID</value></data>
+    <data name="Col_Product" xml:space="preserve"><value>Producto</value></data>
+    <data name="Col_Supplier" xml:space="preserve"><value>Proveedor</value></data>
+    <data name="Col_Qty" xml:space="preserve"><value>Cant.</value></data>
+    <data name="Col_Status" xml:space="preserve"><value>Estado</value></data>
+    <data name="Col_Date" xml:space="preserve"><value>Fecha</value></data>
+    <data name="Col_Name" xml:space="preserve"><value>Insumo</value></data>
+    <data name="Col_Current" xml:space="preserve"><value>Stock Actual</value></data>
+    <data name="Col_Threshold" xml:space="preserve"><value>Mínimo</value></data>
+    <data name="Col_Activity" xml:space="preserve"><value>Actividad</value></data>
+    <data name="Col_Movements" xml:space="preserve"><value>Movimientos</value></data>
+
+    <data name="NoOrders" xml:space="preserve"><value>No se encontraron órdenes en este periodo</value></data>
+    <data name="NoSupplies" xml:space="preserve"><value>No hay datos de inventario disponibles</value></data>
+    <data name="NoAlerts" xml:space="preserve"><value>Sin alertas - Todo el stock está sobre el mínimo</value></data>
+    <data name="NoRotation" xml:space="preserve"><value>No hubo movimientos en este periodo</value></data>
+    <data name="AlertHeader" xml:space="preserve"><value>insumos bajo el mínimo</value></data>
+    <data name="TotalDays" xml:space="preserve"><value>Días con Actividad</value></data>
+    <data name="TotalMoves" xml:space="preserve"><value>Total Movimientos</value></data>
+</root>

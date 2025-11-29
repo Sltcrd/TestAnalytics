@@ -11,5 +11,6 @@ namespace WinesoftPlatform.API.Analytics.Interfaces.REST.Resources;
 public record GenerateReportResource(
     [Required] DateTime StartDate,
     [Required] DateTime EndDate,
-    [Required] IEnumerable<string> Widgets
+    [Required] IEnumerable<string> Widgets,
+    string Language = "en"
 );

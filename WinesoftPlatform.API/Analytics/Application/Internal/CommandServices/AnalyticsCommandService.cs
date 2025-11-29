@@ -25,6 +25,6 @@ public class AnalyticsCommandService : IAnalyticsCommandService
             .Select(w => Enum.Parse<WidgetType>(w, ignoreCase: true))
             .ToList();
 
-        return await _reportBuilder.GeneratePdfReportAsync(period, widgets);
+        return await _reportBuilder.GeneratePdfReportAsync(period, widgets, command.Language);
     }
 }

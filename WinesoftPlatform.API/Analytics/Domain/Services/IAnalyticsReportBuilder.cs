@@ -13,5 +13,5 @@ public interface IAnalyticsReportBuilder
     /// <param name="period">The report period</param>
     /// <param name="widgets">List of widgets to include</param>
     /// <returns>PDF document as byte array</returns>
-    Task<byte[]> GeneratePdfReportAsync(ReportPeriod period, IEnumerable<WidgetType> widgets);
+    Task<byte[]> GeneratePdfReportAsync(ReportPeriod period, IEnumerable<WidgetType> widgets, string language);
 }
